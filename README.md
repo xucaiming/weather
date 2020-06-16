@@ -1,9 +1,10 @@
 <h1 align="center"> weather </h1>
 
-<p align="center"> A Weather SDK.</p>
+<p align="center"> 基于谷歌地图接口的 PHP 天气组件.</p>
 
+[![Build Status](https://travis-ci.org/xucaiming/weather.svg?branch=master)](https://travis-ci.org/xucaiming/weather)
 
-## Installing
+## 安装
 
 ```shell
 $ composer require xucaiming/weather -vvv
