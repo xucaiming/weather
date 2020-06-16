@@ -3,9 +3,7 @@
 namespace Xucaiming\Weather;
 
 use GuzzleHttp\Client;
-
 use Xucaiming\Weather\Exceptions\InvalidArgumentException;
-
 use Xucaiming\Weather\Exceptions\HttpException;
 
 class Weather
@@ -29,7 +27,17 @@ class Weather
         $this->guzzleOptions = $options;
     }
 
-    public function getWeather($city, string $type = 'base', string $format = 'json')
+    public function getLiveWeather($city, $format = 'json')
+    {
+        return $this->getWeather($city, 'base', $format);
+    }
+
+    public function getForecastsWeather($city, $format = 'json')
+    {
+        return $this->getWeather($city, 'all', $format);
+    }
+
+    public function getWeather($city, $type = 'base', $format = 'json')
     {
         $url = 'https://restapi.amap.com/v3/weather/weatherInfo';
 
@@ -41,11 +49,14 @@ class Weather
             throw new InvalidArgumentException('Invalid type value(base/all): '.$type);
         }
 
+        $format = \strtolower($format);
+        $type = \strtolower($type);
+
         $query = array_filter([
             'key' => $this->key,
             'city' => $city,
             'output' => $format,
-            'extensions' =>  $type,
+            'extensions' => $type,
         ]);
 
         try {
@@ -58,4 +69,5 @@ class Weather
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
+
 }
